@@ -76,6 +76,9 @@ supported path patterns:
 * npm packages
 * [glob](https://github.com/sindresorhus/globby)
 
+#### context [string]
+base directory, an absolute path, for resolving files to concatenate. If not defined, context from webpack config is used.
+
 #### injectType ["prepend"|"append"|"none"] default: "prepend"
 how to auto inject to html-webpack-plugin(only if html-webpack-plugin set inject option not to be false)
 

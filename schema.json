@@ -29,6 +29,9 @@
         "filesToConcat": {
             "type": "array"
         },
+        "context": {
+            "type": "string"
+        },
         "injectType": {
             "enum": ["prepend", "append", "none"]
         },

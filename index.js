@@ -115,7 +115,9 @@ class ConcatPlugin {
         const self = this;
         let readFilePromise;
 
-        const relativePathArrayPromise = this.getRelativePathAsync(compiler.options.context);
+        const context = self.settings.context ? self.settings.context : compiler.options.context;
+
+        const relativePathArrayPromise = this.getRelativePathAsync(context);
 
         this.filesToConcatAbsolutePromise = new Promise((resolve, reject) => {
             compiler.resolverFactory.plugin('resolver normal', resolver => {
@@ -125,7 +127,7 @@ class ConcatPlugin {
                             new Promise((resolve, reject) =>
                                 resolver.resolve(
                                     {},
-                                    compiler.options.context,
+                                    context,
                                     relativeFilePath,
                                     {},
                                     (err, filePath) => {
@@ -159,7 +161,7 @@ class ConcatPlugin {
                                 }
                                 else {
                                     resolve({
-                                        ['webpack:///' + upath.relative(compiler.options.context, filePath)]: data.toString()
+                                        ['webpack:///' + upath.relative(context, filePath)]: data.toString()
                                     });
                                 }
                             });
@@ -265,6 +267,8 @@ class ConcatPlugin {
 
         const self = this;
 
+        const context = self.settings.context ? self.settings.context : compiler.options.context;
+
         const dependenciesChanged = (compilation, filesToConcatAbsolute) => {
             const fileTimestampsKeys = Object.keys(compilation.fileTimestamps);
             // Since there are no time stamps, assume this is the first run and emit files
@@ -281,7 +285,7 @@ class ConcatPlugin {
         const processCompiling = (compilation, callback) => {
             self.filesToConcatAbsolutePromise.then(filesToConcatAbsolute => {
                 for (const f of filesToConcatAbsolute) {
-                    compilation.fileDependencies.add(path.relative(compiler.options.context, f));
+                    compilation.fileDependencies.add(path.relative(context, f));
                 }
                 if (!dependenciesChanged(compilation, filesToConcatAbsolute)) {
                     return callback();
