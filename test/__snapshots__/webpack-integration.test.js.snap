@@ -1,5 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Webpack Integration Tests context 1`] = `
+"var x = 1;
+
+
+/**
+ * Redefine \\"x\\"
+ * @type {number}
+ */
+x = 10;
+
+var y = 2;
+
+
+
+
+
+
+
+y = 5;
+debugger;
+// End of this test file
+
+\\"use strict\\";
+
+module.exports = function isObject(x) {
+	return typeof x === \\"object\\" && x !== null;
+};
+"
+`;
+
 exports[`Webpack Integration Tests html-plugin 1`] = `
 "var x=1;x=10;var y=2;y=5;
 //# sourceMappingURL=file.0ff883d05f62ecabac00.js.map"
